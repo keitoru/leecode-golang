@@ -28,6 +28,7 @@ func threeSum(nums []int) [][]int {
 			if nums[i]+nums[L]+nums[R] == 0 {
 				res = append(res, []int{nums[i], nums[L], nums[R]})
 
+				// 相同的值就跳过
 				for L < R && nums[L] == nums[L+1] {
 					L++
 				}

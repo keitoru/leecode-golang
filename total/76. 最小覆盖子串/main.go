@@ -6,6 +6,52 @@ import (
 )
 
 func minWindow(s string, t string) string {
+	need := map[byte]int{}
+	// 每个字符所需的个数
+	for _, c := range []byte(t) {
+		if _, ok := need[c]; !ok {
+			need[c] = 0
+		}
+		need[c]++
+	}
+	// 所需字符的个数
+	needCnt := len(t)
+	minBegin, minLen := 0, 0
+
+	left := 0
+	for right, c := range []byte(s) {
+		if need[c] > 0 {
+			needCnt--
+		}
+		need[c]--
+
+		// 窗口里包含t的所有元素
+		if needCnt == 0 {
+			// 左指针移动，缩小滑动窗口，直到碰到一个必须包含的元素
+			for need[s[left]] < 0 {
+				need[s[left]]++
+				left++
+			}
+
+			// 当前窗口大小
+			length := right - left + 1
+			if minLen == 0 || length < minLen {
+				minBegin = left
+				minLen = length
+			}
+
+			// 让左指针在增加一个位置，开始寻找下一个满足条件的滑动窗口
+			need[s[left]]++
+			needCnt++
+			left++
+		}
+	}
+
+	return s[minBegin : minBegin+minLen]
+
+}
+
+func minWindow1(s string, t string) string {
 	need := make(map[byte]int)
 	window := make(map[byte]int)
 

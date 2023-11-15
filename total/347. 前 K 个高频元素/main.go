@@ -11,6 +11,12 @@ func topKFrequent(nums []int, k int) []int {
 		}
 	}
 
+	pq:=
+		var compare	func(a,b int) int
+	compare = func(a, b int) int {
+		return
+	}
+
 	for k, v := range m {
 
 	}
